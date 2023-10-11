@@ -1,140 +1,111 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-struct node{
-    int val;
-    struct node* next;
+struct stack{
+    int size;
+    int top;
+    int *arr;
 };
 
-int Is_empty(struct node*ptr){
-    if(ptr==NULL){
+int Is_empty(struct stack*ptr){               // check if stack is empty
+    if(ptr->top==-1)
+        return 1;
+    else
+        return 0;
+}
+int Is_full(struct stack*ptr){                // check if satck is full
+    if(ptr->top==ptr->size-1){
         return 1;
     }
-    else{
+    else
         return 0;
-    }
 }
 
-int Is_full(struct node*ptr){
-    struct node*top =(struct node*)malloc(sizeof(struct node));
-
-    if(top==NULL){
-        return 1;
-    }
-    else{
-        return 0;
-    }
-}
-
-struct node* push(struct node*top, int val){
-    if(Is_full(top)){
+void push(struct stack* ptr, int val){         // push function in stack
+    if(Is_full(ptr)){
         printf("stack overflow");
     }
     else{
-        struct node* ptr=(struct node*)malloc(sizeof(struct node)) ;
-        ptr->val=val;
-        ptr->next=top;
-        top = ptr;
-        return top;
+        ptr->top++;
+        ptr->arr[ptr->top]=val;
     }
 }
-
-int pop(struct node**top){
-    if(Is_empty(*top)){
-        printf("stack under flow");
+int pop(struct stack*ptr){                    // pop function in stack
+    int x;
+    if(Is_empty(ptr)){
+        printf("stack unreflow");
     }
     else{
-        int x;
-        struct node* s=*top;
-        *top=(*top)->next;
-        x=s->val;
-        free(s);
+        x=ptr->arr[ptr->top];
+        ptr->top--;
         return x;
     }
 }
 
-int peak(struct node* top, int index){
-    struct node* ptr=top;
-    int x=1;
-    int j;
-    while(x<=index){
-        if(x==index){
-            j=ptr->val;
-            return j;
-        }
-        ptr=ptr->next;
-        x++;
+int peak(struct stack* ptr, int position){
+    int shortcut=ptr->top-position+1;
+    if(shortcut<0){
+        printf("invalid input");
+        return -1;
     }
+    else
+        return ptr->arr[shortcut];
 }
-int stackTop(struct node*top){
-    return top->val;
-}
-
-int satckBottom(struct node*top){
-    struct node*ptr=top;
-     while(ptr->next!=NULL){
-        ptr=ptr->next;
-    }
-    return ptr->val;
-
-}
-
-void LinkedListTraversal(struct node* top){
-
-    while(top!=NULL){
-        printf("value is %d\n",top->val);
-        top=top->next;
-    }
-}
-
 int main()
 {
-    struct node* top=NULL;
-    top=push(top,78);
-    top=push(top,8);
-    top=push(top,3478);
-    top=push(top,782);
-    top=push(top,7843);
-    LinkedListTraversal(top);
+    struct stack* s=(struct stack*)malloc(sizeof(struct stack));
+    s->size=10;
+    s->top=-1;
+    s->arr=(int*)malloc(sizeof(int));
 
-    // int j=pop(&top);                                             POP FUNCTION CHECKING
-    // printf("\n\n%d\n",j);
-    // LinkedListTraversal(top);
-    // j=pop(&top);
-    // printf("\n\n%d\n",j);
-    // LinkedListTraversal(top);
+    //                                             just to check if push and pop fuction are working;
+
+    // printf("after just creating the stack\n");
+
+    // if(Is_empty(s)){
+    //     printf("stack is empty\n");
+    // }
+    // else{
+    //     printf("stafck is not empty\n");
+    // }
+
+    // push(s,78);
+
+    // printf("after pushing in stack\n");
+
+    // if(Is_empty(s)){
+    //     printf("stack is empty\n");
+    // }
+    // else{
+    //     printf("stack is not empty\n");
+    // }
+
+    // int x=pop(s);
+
+    // printf("after popping from the stack\n");
+
+    // if(Is_empty(s)){
+    //     printf("stack is empty\n");
+    //     printf("return item is %d\n",x);
+    // }
+    // else{
+    //     printf("stack is not empty\n");
+    //     printf("return item is %d\n",x);
+    // }
+
+    //                                                  working fine 
+
+    int x,j,y;
+    for(x=1;x<=10;x++){
+        push(s,x);
+    }
+
+    // y=peak(s,6);
+    // printf("%d",y);
+    
+    for(j=1;j<=s->top+1;j++){
+        printf("value at posotion %d is %d\n",j,peak(s,j));            // to print whole stack
+    }
 
 
-    // int siui=peak(top,1);                                        PEAK FUNCTION CHECKING 
-    // printf("%d",siui);
-
-    int lm=stackTop(top);
-    printf("\ntop element %d\n",lm);
-
-    int rnld=satckBottom(top);
-    printf("bottom element %d",rnld);
-    return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
