@@ -22,7 +22,6 @@ public:
         head = nullptr;
     }
 
-    // Insert a new node at the beginning of the list
     void insert(int value) {
         Node* newNode = new Node(value);
         if (head == nullptr) {
