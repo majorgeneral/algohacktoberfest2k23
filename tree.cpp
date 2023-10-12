@@ -14,7 +14,6 @@ public:
     }
 };
 
-// Binary tree class
 class BinaryTree {
 private:
     Node* root;
