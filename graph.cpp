@@ -31,7 +31,6 @@ public:
 int main() {
     Graph myGraph(5);
 
-    // Adding edges to the graph
     myGraph.addEdge(0, 1);
     myGraph.addEdge(0, 4);
     myGraph.addEdge(1, 2);
